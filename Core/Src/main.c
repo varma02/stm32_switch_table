@@ -149,6 +149,22 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim1);
   HAL_TIM_PWM_Init(&htim2);
 
+  FDCAN_FilterTypeDef _filter_1;
+  _filter_1.FilterIndex = 0;
+  _filter_1.IdType = FDCAN_STANDARD_ID;
+  _filter_1.FilterType = FDCAN_FILTER_DUAL;
+  _filter_1.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+  _filter_1.FilterID1 = 0x185;
+  _filter_1.FilterID2 = 0x190;
+  HAL_FDCAN_ConfigFilter(&hfdcan1, &_filter_1);
+  FDCAN_FilterTypeDef _filter_2;
+  _filter_2.FilterIndex = 1;
+  _filter_2.IdType = FDCAN_STANDARD_ID;
+  _filter_2.FilterType = FDCAN_FILTER_DUAL;
+  _filter_2.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+  _filter_2.FilterID1 = 0x123;
+  _filter_2.FilterID2 = 0x10;
+  HAL_FDCAN_ConfigFilter(&hfdcan1, &_filter_2);
 
   HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 
@@ -281,15 +297,15 @@ static void MX_FDCAN1_Init(void)
   hfdcan1.Init.AutoRetransmission = DISABLE;
   hfdcan1.Init.TransmitPause = DISABLE;
   hfdcan1.Init.ProtocolException = DISABLE;
-  hfdcan1.Init.NominalPrescaler = 8;
-  hfdcan1.Init.NominalSyncJumpWidth = 1;
-  hfdcan1.Init.NominalTimeSeg1 = 1;
-  hfdcan1.Init.NominalTimeSeg2 = 1;
+  hfdcan1.Init.NominalPrescaler = 1;
+  hfdcan1.Init.NominalSyncJumpWidth = 2;
+  hfdcan1.Init.NominalTimeSeg1 = 21;
+  hfdcan1.Init.NominalTimeSeg2 = 2;
   hfdcan1.Init.DataPrescaler = 1;
-  hfdcan1.Init.DataSyncJumpWidth = 1;
-  hfdcan1.Init.DataTimeSeg1 = 1;
-  hfdcan1.Init.DataTimeSeg2 = 1;
-  hfdcan1.Init.StdFiltersNbr = 0;
+  hfdcan1.Init.DataSyncJumpWidth = 11;
+  hfdcan1.Init.DataTimeSeg1 = 12;
+  hfdcan1.Init.DataTimeSeg2 = 11;
+  hfdcan1.Init.StdFiltersNbr = 2;
   hfdcan1.Init.ExtFiltersNbr = 0;
   hfdcan1.Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
   if (HAL_FDCAN_Init(&hfdcan1) != HAL_OK)
