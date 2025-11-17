@@ -3,3 +3,5 @@ Drivers/
 *.cfg
 *.launch
 *.ld
+.mxproject
+.settings
