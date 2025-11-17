@@ -197,9 +197,9 @@ void Port_Update() {
 	vcu_state.B.RELAY_NO       = HAL_GPIO_ReadPin(IN_SHELL_RELAY_GPIO_Port, IN_SHELL_RELAY_Pin);
 
 	if (vcu_state.A.BRAKE == SET) {
-		HAL_GPIO_WritePin(OUT_BREAK_GPIO_Port, OUT_BREAK_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(OUT_BRAKE_GPIO_Port, OUT_BRAKE_Pin, GPIO_PIN_RESET);
 	} else {
-		HAL_GPIO_WritePin(OUT_BREAK_GPIO_Port, OUT_BREAK_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(OUT_BRAKE_GPIO_Port, OUT_BRAKE_Pin, GPIO_PIN_SET);
 	}
 
 	if (vcu_state.B.RELAY_NO == SET) {

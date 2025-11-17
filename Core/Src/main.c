@@ -149,6 +149,7 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim1);
   HAL_TIM_PWM_Init(&htim2);
 
+
   HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 
   while (1)
