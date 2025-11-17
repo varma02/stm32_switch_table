@@ -280,7 +280,7 @@ static void MX_FDCAN1_Init(void)
   hfdcan1.Init.AutoRetransmission = DISABLE;
   hfdcan1.Init.TransmitPause = DISABLE;
   hfdcan1.Init.ProtocolException = DISABLE;
-  hfdcan1.Init.NominalPrescaler = 16;
+  hfdcan1.Init.NominalPrescaler = 8;
   hfdcan1.Init.NominalSyncJumpWidth = 1;
   hfdcan1.Init.NominalTimeSeg1 = 1;
   hfdcan1.Init.NominalTimeSeg2 = 1;
@@ -320,7 +320,7 @@ static void MX_TIM1_Init(void)
 
   /* USER CODE END TIM1_Init 1 */
   htim1.Instance = TIM1;
-  htim1.Init.Prescaler = 0;
+  htim1.Init.Prescaler = 1;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim1.Init.Period = 20000-1;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -368,9 +368,9 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 1 */
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 24-1;
+  htim2.Init.Prescaler = 4-1;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 50000-1;
+  htim2.Init.Period = 60000-1;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
@@ -428,14 +428,14 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(OUT_WIPER_CONVERTER_GPIO_Port, OUT_WIPER_CONVERTER_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(OUT_BREAK_GPIO_Port, OUT_BREAK_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(OUT_BRAKE_GPIO_Port, OUT_BRAKE_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : SW_AUTO_Pin IN_BRAKE_Pin SW_HAZARD_Pin SW_HEADLIGHT_Pin
                            IN_SHELL_RELAY_Pin SW_WIPER_Pin SW_MC_OW_Pin SW_LIGHTS_Pin */
   GPIO_InitStruct.Pin = SW_AUTO_Pin|IN_BRAKE_Pin|SW_HAZARD_Pin|SW_HEADLIGHT_Pin
                           |IN_SHELL_RELAY_Pin|SW_WIPER_Pin|SW_MC_OW_Pin|SW_LIGHTS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pin : OUT_WIPER_CONVERTER_Pin */
@@ -445,12 +445,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(OUT_WIPER_CONVERTER_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : OUT_BREAK_Pin */
-  GPIO_InitStruct.Pin = OUT_BREAK_Pin;
+  /*Configure GPIO pin : OUT_BRAKE_Pin */
+  GPIO_InitStruct.Pin = OUT_BRAKE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(OUT_BREAK_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(OUT_BRAKE_GPIO_Port, &GPIO_InitStruct);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 
