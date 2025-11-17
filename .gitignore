@@ -1,0 +1,5 @@
+Debug/
+Drivers/
+*.cfg
+*.launch
+*.ld
