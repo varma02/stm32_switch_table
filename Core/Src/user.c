@@ -53,11 +53,26 @@ struct WIPER_STATE wiper_state;
 
 
 /**
+ * Performs a single raw ADC read of the potentiometer
+ * @retval the current value
+ */
+uint16_t ADC_Read() {
+	uint16_t value;
+	HAL_ADC_Start(pot_adc);
+	if (HAL_ADC_PollForConversion(pot_adc, 5) == HAL_OK) {
+		value = HAL_ADC_GetValue(pot_adc);
+	}
+	HAL_ADC_Stop(pot_adc);
+	return value;
+}
+
+
+/**
  * Reads, filters and debounces the current value of the potentiometer
  */
 void Pot_Read_Filtered() {
 	pot_value.prev = pot_value.current;
-	pot_value.current = HAL_ADC_GetValue(pot_adc);
+	pot_value.current = ADC_Read();
 
 	if (pot_value.current > POT_ZERO) {
         pot_value.ema = (POT_EMA * pot_value.current) + ((1 - POT_EMA) * pot_value.ema);
@@ -67,12 +82,13 @@ void Pot_Read_Filtered() {
 	if ((pot_value.current - pot_value.prev) <= POT_STEP)
 		pot_value.current = pot_value.prev;
 
-	if (pot_value.current <= POT_ZERO + POT_STEP)
+	if (pot_value.current <= POT_ZERO + POT_STEP) {
 		pot_value.current = POT_VALUES[0];
-	else if (pot_value.current <= POT_ZERO + POT_STEP * 19)
+	} else if (pot_value.current <= POT_ZERO + POT_STEP * 19) {
 		pot_value.current = POT_VALUES[(pot_value.current - POT_ZERO) / POT_STEP];
-	else
+	} else {
 		pot_value.current = POT_VALUES[19];
+	}
 }
 
 /**
@@ -96,7 +112,9 @@ uint16_t Rate_Limit(uint16_t value) {
 void Drive_State_Update() {
 	drive_state.prev = drive_state.current;
 	if (vcu_state.A.MC_OW == RESET) {
-		if (pot_value.current > 0) {
+		if (stw_state.A.DRIVE == RESET && stw_state.A.REVERSE == RESET) {
+			drive_state.current = D_NEUTRAL;
+		} else if (pot_value.current > 0) {
 			if (stw_state.A.DRIVE == SET) {
 				drive_state.current = D_DRIVE_PEDAL;
 			} else if (stw_state.A.REVERSE == SET) {
@@ -260,9 +278,13 @@ void CAN_Send_Mc(uint16_t reference) {
 
 	header.Identifier = 0xA51;
 	header.IdType = FDCAN_EXTENDED_ID;
-	header.FDFormat = FDCAN_CLASSIC_CAN;
 	header.TxFrameType = FDCAN_DATA_FRAME;
 	header.DataLength = FDCAN_DLC_BYTES_4;
+	header.FDFormat = FDCAN_CLASSIC_CAN;
+	header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+	header.BitRateSwitch = FDCAN_BRS_OFF;
+	header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+	header.MessageMarker = 0;
 
 	int32_t throttle_buffer = (reference * 100000) / 1023;
 	if (stw_state.A.REVERSE)
@@ -353,7 +375,7 @@ void User_Init(ADC_HandleTypeDef *adc_ptr, FDCAN_HandleTypeDef *fdcan_ptr, TIM_H
 	drive_state.prev = D_NEUTRAL;
 	pot_value.current = POT_ZERO;
 	pot_value.prev = POT_ZERO;
-	pot_value.ema = 0;
+	pot_value.ema = POT_ZERO;
 	rate_limiter.current = 0;
 	rate_limiter.prev = 0;
 	wiper_state.running = RESET;
@@ -381,10 +403,10 @@ void User_Loop() {
 //		vcu_state.A.MC_OW = RESET;
 	}
 
-	if (user_flags.adc_conversion == SET) {
-		Pot_Read_Filtered();
-		user_flags.adc_conversion = RESET;
-	}
+//	if (user_flags.adc_conversion == SET) {
+	Pot_Read_Filtered();
+//		user_flags.adc_conversion = RESET;
+//	}
 
 	if (user_flags.interval_CAN == SET) {
 		CAN_Send_Vcu();

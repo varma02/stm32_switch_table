@@ -22,11 +22,11 @@
 #define POT_EMA    (float)0.4
 #define POT_ZERO   (uint16_t)2600
 #define POT_MAX    (uint16_t)2825
-#define POT_STEP   (uint16_t)(POT_MAX - POT_ZERO) / 20
+#define POT_STEP   (uint16_t)((POT_MAX - POT_ZERO) / 20)
 #define POT_VALUES (const uint16_t[]){0, 102, 153, 204, 255, 306, 357, 408, 459, 510, 561, 612, 663, 714, 765, 816, 867, 918, 969, 1023}
 
 // get speed from RPM
-#define SPEED_MULT_FACTOR (double)(PI*0.5586*3.6)/60
+#define SPEED_MULT_FACTOR (double)((PI*0.5586*3.6)/60)
 
 // motor acceleration limits
 #define RATE_LIMIT_UP   (uint16_t)51

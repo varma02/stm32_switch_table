@@ -66,10 +66,11 @@ static void MX_TIM2_Init(void);
 /* USER CODE BEGIN 0 */
 
 
+// interrupt only fires once for some reason, switched to polling :c
 // ADC conversion complete callback
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
-	user_flags.adc_conversion = SET;
-}
+//void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
+//	user_flags.adc_conversion = SET;
+//}
 
 // Task timer interrupt callback
 struct {
@@ -168,7 +169,7 @@ int main(void)
 
   // start the nessesary modules
   HAL_ADCEx_Calibration_Start(&hadc1);
-  HAL_ADC_Start_IT(&hadc1);
+//  HAL_ADC_Start_IT(&hadc1);
   HAL_TIM_Base_Start_IT(&htim1);
   HAL_FDCAN_Start(&hfdcan1);
 
