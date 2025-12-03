@@ -1,13 +1,21 @@
-# STM32F412CEUx (UFQFPN48)
+# STM32F412RET6 (LQFP64)
 
-![STM32F412CEUx (UFQFPN48)](images/stm32f412ceux-ufqfpn48.png)
+![Image of the MCU](images/stm32f412retx-lqfp64.png)
+
+- **Part Number**: STM32F412RET6
+- **Core**: ARM Cortex-M4, 32-bit
+- **Flash Memory**: 512 kB
+- **Data SRAM**: 256 kB
+- **Operating Voltage**: 1.7V - 3.6V
+- **I/O count**: 50 pins
+- **Package**: LQFP64 (64 pins, 10x10 mm)
 
 ## Pin capabilities
 
 - ADC: Analog-to-Digital Converter
 - CAN: Controller Area Network
 - GPIO: General-Purpose Input/Output
-- PWM: Pulse-Width Modulation
+- PWM: Timer 1 PWM channels
 - OSC: External Oscillator
   - HSE: High-Speed (4 - 26 MHz)
   - LSE: Low-Speed (0 - 1000 kHz)
@@ -47,8 +55,22 @@
 | PB13 | -      | -      | ✅     | ✅      | ✅       | 🆖      | -        | -        |
 | PB14 | -      | -      | -      | ✅      | ✅       | 🆖      | -        | -        |
 | PB15 | -      | -      | -      | ✅      | ✅       | 🆖      | -        | -        |
+| PC0  | ✅     | -      | -      | ✅      | ✅       | -       | -        | -        |
+| PC1  | ✅     | -      | -      | ✅      | ✅       | -       | -        | -        |
+| PC2  | ✅     | -      | -      | ✅      | ✅       | -       | -        | -        |
+| PC3  | ✅     | -      | -      | ✅      | ✅       | -       | -        | -        |
+| PC4  | ✅     | -      | -      | ✅      | ✅       | -       | -        | -        |
+| PC5  | ✅     | -      | -      | ✅      | ✅       | -       | -        | -        |
+| PC6  | -      | -      | -      | ✅      | ✅       | -       | -        | -        |
+| PC7  | -      | -      | -      | ✅      | ✅       | -       | -        | -        |
+| PC8  | -      | -      | -      | ✅      | ✅       | -       | -        | -        |
+| PC9  | -      | -      | -      | ✅      | ✅       | -       | -        | -        |
+| PC10 | -      | -      | -      | ✅      | ✅       | -       | -        | -        |
+| PC11 | -      | -      | -      | ✅      | ✅       | -       | -        | -        |
+| PC12 | -      | -      | -      | ✅      | ✅       | -       | -        | -        |
 | PC13 | -      | -      | -      | ✅      | ✅       | -       | -        | -        |
 | PC14 | -      | -      | -      | ✅      | ✅       | -       | ✅ (LSE) | -        |
 | PC15 | -      | -      | -      | ✅      | ✅       | -       | -        | ✅ (LSE) |
+| PD2  | -      | -      | -      | ✅      | ✅       | -       | -        | -        |
 | PH0  | -      | -      | -      | ✅      | ✅       | -       | ✅ (HSE) | -        |
 | PH1  | -      | -      | -      | ✅      | ✅       | -       | -        | ✅ (HSE) |
